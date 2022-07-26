@@ -1,34 +1,27 @@
 import { useEffect, useState } from "react";
 import Comp from "./Comp";
-import Panel from "./Panel";
 
-function Main() {
-  const [jsonData, setjsonData] = useState([]);
-  const getData = () => {
-    // const options = {
-    // 	method: 'GET',
-    // 	headers: {
-    // 		'X-RapidAPI-Key': '848dbc1e9cmsha2062b22ceb6cc6p154580jsn908b37a658b4',
-    // 		'X-RapidAPI-Host': 'google-news1.p.rapidapi.com'
-    // 	}
-    // };
-    // fetch('https://google-news1.p.rapidapi.com/top-headlines?country=US&lang=en&limit=50', options)
-    // 	.then(response => response.json())
-    // 	.then(response => {
-    // 	setjsonData(response.articles)
-    //     })
-    // 	.catch(err => console.error(err));
-  };
-  useEffect(() => {
-    getData();
-    console.log(jsonData);
-  }, []);
+function Main(props) {
+  const [aticles, setAticles] = useState([]);
+    const updateNews =()=>{
+      const apiKey = process.env.React_App_News_Api_Key;
+      let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&sortBy=popularity&category=${props.category}&apiKey=${apiKey}&pageSize=${props.pageSize}`;
+      let req = new Request(url);
+      fetch(req).then((response)=>response.json()).then((data)=>{
+        setAticles(data.articles);
+        console.log(aticles);
+      })
+    }
+    useEffect(() => {
+      updateNews(); 
+      // eslint-disable-next-line
+  }, [])
   return (
-    <div style={{ margin: "150px 0px 0px 0px" }}>
-     <Panel />
-      <Comp />
-      <Comp />
-    </div>
+    <>
+      {aticles.map((aticle)=>{
+        return <Comp heading ={aticle.title?aticle.title:''} author = {aticle.author} date = {aticle.publishedAt} newsMedia={aticle.source.name} description = {aticle.description?aticle.description:''} link = {aticle.url} image = {aticle.urlToImage}/>
+      })}
+    </>
   );
 }
 export default Main;

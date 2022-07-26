@@ -1,23 +1,9 @@
-import React from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Box,
-  InputBase,
-  Tabs,
-  Tab,
-  Divider,
-  Avatar,
-} from "@mui/material";
-import {
-  styled,
-  alpha,
-  ThemeProvider,
-  createTheme,
-} from "@mui/material/styles";
+import React, { useState } from "react";
+import { AppBar, Toolbar, Typography, Box, InputBase, Tabs, Tab, Divider, Avatar,} from "@mui/material";
+import { styled, alpha, ThemeProvider, createTheme} from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
-import avatar from "./background.jpeg";
+import {Link} from "react-router-dom";
+import avatar from "./Images/background.jpeg";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -55,18 +41,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-const navItems1 = ["Home", "For you", " Following", "News Showcase"];
-const navItems2 = [
-  "India",
-  "World",
-  " Local",
-  "  Business",
-  "  Technology",
-  "  Entertainment",
-  "  Sports",
-  "Science",
-  "Health",
-];
 const theme1 = createTheme({
   typography: {
     fontFamily: " 'Mochiy Pop One', sans-serif",
@@ -80,13 +54,15 @@ const theme2 = createTheme({
     primary: {
       main: "#f5f6f7",
     },
+    secondary: {
+      main: '#ab47bc',
+    },
   },
 });
-
-const Navbar = () => {
+const Navbar = (props) => {
   return (
     <ThemeProvider theme={theme2}>
-      <Box sx={{ flexGrow: 1 ,zIndex:1}} position="sticky" >
+      <Box sx={{ flexGrow: 1, zIndex: 1,paddingBottom:'5px'}} position="sticky" >
         <AppBar sx={{ boxShadow: 0 }}>
           <Toolbar sx={{ justifyContent: "space-between" }}>
             <ThemeProvider theme={theme1}>
@@ -94,7 +70,6 @@ const Navbar = () => {
                 variant="h5"
                 noWrap
                 component="div"
-                sx={{ display: { xs: "none", sm: "block" } }}
               >
                 News App
               </Typography>
@@ -108,33 +83,27 @@ const Navbar = () => {
                 inputProps={{ "aria-label": "search" }}
               />
             </Search>
-            <Avatar alt="Remy Sharp" src={avatar} />
+            <Avatar src={avatar} />
           </Toolbar>
-
-          <Box
-            sx={{
-              borderBottom: 1,
-              borderColor: "divider",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <Tabs aria-label="basic tabs example">
-              {navItems1.map((item) => (
-                <Tab label={item} />
-              ))}
-            </Tabs>
-            <Divider orientation="vertical" variant="middle" flexItem />
-            <Tabs aria-label="basic tabs example">
-              {navItems2.map((item) => (
-                <Tab label={item} />
-              ))}
-            </Tabs>
-          </Box>
+            <Box sx={{ width: "100%",display:'flex',justifyContent:"space-around" }}>
+              <Tabs textColor="secondary" indicatorColor="secondary" aria-label="secondary tabs example">
+                  <Tab   label="Home" component={Link} to = "/"/>
+                  <Tab  label='Following' component={Link} to = "/following"/>
+                  <Divider orientation="vertical" variant="middle" flexItem />
+                  <Tab  label="India" component={Link} to = "/india"/>
+                  <Tab  label="World" component={Link} to = "/world"/>
+                  <Tab   label="Local" component={Link} to = "/local"/>
+                  <Tab   label="Business" component={Link} to = "/business"/>
+                  <Tab   label="Technology" component={Link} to = "/technology"/>
+                  <Tab  label="Entertainment" component={Link} to = "/entertainment"/>
+                  <Tab  label="Sports" component={Link} to = "/sports"/>
+                  <Tab label="Science" component={Link} to = "/science"/>
+                  <Tab  label="Health" component={Link} to = "/health"/>
+              </Tabs>
+            </Box>
         </AppBar>
       </Box>
     </ThemeProvider>
   );
 };
 export default Navbar;
-// "#b2cecf"

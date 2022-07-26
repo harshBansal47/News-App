@@ -1,15 +1,7 @@
 import React from "react";
-import {
-  Card,
-  CardActionArea,
-  Typography,
-  CardMedia,
-  CardContent,
-  Divider,
-  ThemeProvider,
-  createTheme,
-} from "@mui/material";
-import logo from "./background.jpeg";
+import { Card, CardActionArea, Typography,CardMedia, CardContent, Divider, Link, ThemeProvider, createTheme,} from "@mui/material";
+import logo from "./Images/background.jpeg";
+
 
 const theme = createTheme({
   typography: {
@@ -26,36 +18,50 @@ const theme = createTheme({
         },
       },
     },
+    MuiCardMedia: {
+      defaultProps: {
+        img: {
+          image: { logo },
+        },
+      },
+    },
   },
 });
 
-const Comp = () => {
+const Comp = (props) => {
   return (
     <ThemeProvider theme={theme}>
       <Card
         sx={{
-          maxWidth: "650px",
+          maxWidth: "800px",
           borderRadius: "10px",
           display: "flex",
-          float: "left",
-          margin: "30px 50px",
+          margin: "40px auto",
         }}
       >
         <CardContent>
           <Typography component="h2" variant="h5">
-            Chinese Tanks roll on streets to scare Henan bank protestors
+            {props.heading.slice(0,90)}..
           </Typography>
-          <Typography variant="subtitle2" color="text.secondary" sx = {{margin:'5px 0px'}}>
-            Zhengzhou [China], July 20 (ANI)
+          <Typography
+            variant="subtitle2"
+            color="text.secondary"
+            sx={{ margin: "5px 0px" }}
+          >
+            {props.author} | {props.newsMedia}
+            <Divider orientation="vertical" variant="middle" flexItem />
+            {props.date.substr(0,10).toIso}
           </Typography>
           <Typography variant="subtitle1" paragraph>
-            Communist Party’s tanks rolled on the streets to scare Henan bank
-            protestors amid large-scale protests
+            {props.description.slice(0,200)}...
           </Typography>
-          <CardActionArea component="a" href="#" sx={{ marginBottom: "5px" }}>
+          <CardActionArea  sx={{ marginBottom: "5px" }}>
             <Typography variant="h6" color="primary">
+            <Link to={props.link} target="_blank" rel="noreferrer" underline="hover">
               Read More
+              </Link> 
             </Typography>
+            
           </CardActionArea>
         </CardContent>
         <Divider orientation="vertical" flexItem />
@@ -68,11 +74,15 @@ const Comp = () => {
             borderRadius: "5px",
             margin: "10px 10px 10px 10px",
           }}
-          image={logo}
-          alt={logo}
-        ></CardMedia>
+          image={props.image}
+        />
       </Card>
     </ThemeProvider>
   );
 };
 export default Comp;
+Comp.defaultProps = {
+  heading: 'Heading',
+  description:'Description',
+  image:{logo}
+}
