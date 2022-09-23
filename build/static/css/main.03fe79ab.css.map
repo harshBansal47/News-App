@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.03fe79ab.css","mappings":"AAAA,KACI,kBACJ,CACA,EACI,QAAS,CACT,SAEJ","sources":["App.css"],"sourcesContent":["body{\r\n    background:#d4d9e1;\r\n}\r\n*{\r\n    margin: 0;\r\n    padding: 0;\r\n\r\n}"],"names":[],"sourceRoot":""}
